@@ -1,0 +1,30 @@
+[project]
+name = "oppna-insynsregistret"
+version = "0.1.0"
+description = "The Swedish Finance Inspection's Insynsregister (PDMR / insider transactions under EU MAR) as open data"
+readme = "README.md"
+authors = [
+    { name = "Pierre Mesure", email = "pierre@mesu.re" }
+]
+license = "AGPL-3.0-or-later"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+    "urllib3>=2.0.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+parquet = [
+    "duckdb>=0.10.0",
+]
+
+[project.scripts]
+insyn = "run:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["insyn"]

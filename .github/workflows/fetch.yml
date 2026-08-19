@@ -1,0 +1,33 @@
+name: Fetch the data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *' # 1AM UTC every night
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    name: Fetch and update insider data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.0.1
+        with:
+          enable-cache: true
+
+      - name: Fetch and merge recent data
+        run: uv run run.py --lookback-days 3
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'github-actions[bot]'
+          git add data/
+          git commit -m "Update insider trading data [skip ci]" || echo "Nothing to commit"
+          git push

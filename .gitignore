@@ -1,1 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
 .insyn_cache/
+*.temp.csv
+.DS_Store
+build/
+dist/
+*.egg-info/
